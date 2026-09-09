@@ -1,0 +1,114 @@
+<section class="home-experience" id="home-experience" aria-labelledby="home-experience-title" hidden>
+  <div class="visit-ribbon" aria-label="网站访问统计">
+    <span><strong data-stat="visitors">--</strong> 位访客</span>
+    <span><strong data-stat="views">--</strong> 次浏览</span>
+    <span><strong data-stat="today">--</strong> 今日访问</span>
+    <span><strong data-stat="days">--</strong> 天记录</span>
+  </div>
+  <div class="journey-hero">
+    <div class="journey-hero-copy">
+      <p class="journey-kicker">ZNCU / PHOTO JOURNAL</p>
+      <h2 id="home-experience-title">沿着快门，<br>回到那些地方。</h2>
+      <p class="journey-summary">城市、山海与偶然遇见的光。这里收着 <strong data-stat="albums">15</strong> 卷旅途，共 <strong data-stat="photos">215</strong> 个片段。</p>
+      <div class="journey-actions">
+        <a class="journey-action is-primary" href="/explore/"><i class="fa fa-compass" aria-hidden="true"></i><span>进入摄影地图</span></a>
+        <a class="journey-action" href="https://github.com/Ramsey-L" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i><span>GitHub</span></a>
+        <button class="journey-action" id="random-album" type="button"><i class="fa fa-random" aria-hidden="true"></i><span>随机一卷</span></button>
+      </div>
+    </div>
+    <button class="photo-guide" id="photo-guide" type="button" aria-label="让摄影向导随机选择一篇相册">
+      <img src="/explore/character.svg" alt="" width="132" height="164">
+      <span>带我走走</span>
+    </button>
+    <p class="journey-index"><span data-stat="albums">15</span> ALBUMS / <span data-stat="photos">215</span> FRAMES</p>
+  </div>
+</section>
+
+<div class="portfolio-contact-footer" aria-label="个人信息">
+  <div class="portfolio-contact-links">
+    <a href="/about/">关于我</a>
+    <span aria-hidden="true">/</span>
+    <a href="mailto:liam1093909131@gmail.com">liam1093909131@gmail.com</a>
+  </div>
+  <p>Powered by <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a> &amp; <a href="https://theme-next.js.org/" target="_blank" rel="noopener noreferrer">NexT.Muse</a></p>
+</div>
+
+<script>
+(function () {
+  var home = document.getElementById('home-experience');
+  var isHome = window.location.pathname === '/' || window.location.pathname === '/index.html';
+  var albumData = [];
+
+  function setStat(name, value) {
+    document.querySelectorAll('[data-stat="' + name + '"]').forEach(function (node) {
+      node.textContent = Number(value).toLocaleString('zh-CN');
+    });
+  }
+
+  function randomAlbum() {
+    if (!albumData.length) {
+      var links = Array.from(document.querySelectorAll('.post-title-link')).map(function (link) {
+        return link.href;
+      });
+      if (links.length) {
+        window.location.href = links[Math.floor(Math.random() * links.length)];
+      }
+      return;
+    }
+    var album = albumData[Math.floor(Math.random() * albumData.length)];
+    window.location.href = album.route;
+  }
+
+  fetch('/explore/albums.json', { cache: 'no-store' })
+    .then(function (response) { return response.ok ? response.json() : []; })
+    .then(function (albums) {
+      albumData = albums;
+      setStat('albums', albums.length);
+      setStat('photos', albums.reduce(function (sum, album) { return sum + album.photos; }, 0));
+    })
+    .catch(function () {});
+
+  var started = new Date('2025-05-14T00:00:00+08:00');
+  setStat('days', Math.max(1, Math.floor((Date.now() - started.getTime()) / 86400000) + 1));
+
+  if (isHome && home) {
+    var main = document.querySelector('.main-inner.index');
+    if (main) {
+      main.insertBefore(home, main.firstChild);
+      home.hidden = false;
+    }
+    var cover = document.querySelector('.post-block .photo-log-cover img');
+    if (cover) {
+      home.style.setProperty('--hero-image', 'url("' + (cover.currentSrc || cover.src) + '")');
+    }
+    var randomButton = document.getElementById('random-album');
+    var guide = document.getElementById('photo-guide');
+    if (randomButton) randomButton.addEventListener('click', randomAlbum);
+    if (guide) guide.addEventListener('click', randomAlbum);
+  }
+
+  var storageKey = 'zncu-photo-visitor';
+  var visitorId = localStorage.getItem(storageKey);
+  if (!visitorId) {
+    visitorId = window.crypto && crypto.randomUUID ? crypto.randomUUID() :
+      'v-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2);
+    localStorage.setItem(storageKey, visitorId);
+  }
+
+  if (!/^(localhost|127\.0\.0\.1)$/.test(window.location.hostname)) {
+    fetch('/api/visit', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ visitorId: visitorId, path: window.location.pathname }),
+      keepalive: true
+    })
+      .then(function (response) { return response.ok ? response.json() : Promise.reject(); })
+      .then(function (stats) {
+        setStat('visitors', stats.visitors);
+        setStat('views', stats.views);
+        setStat('today', stats.today);
+      })
+      .catch(function () {});
+  }
+})();
+</script>

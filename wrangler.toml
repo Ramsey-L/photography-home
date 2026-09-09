@@ -1,0 +1,9 @@
+name = "zncu-photo"
+pages_build_output_dir = "./public"
+compatibility_date = "2026-06-10"
+
+[[d1_databases]]
+binding = "VISITS_DB"
+database_name = "zncu-photo-stats"
+database_id = "193781f5-ed8a-4b34-8ffb-2acc0d9ef289"
+preview_database_id = "193781f5-ed8a-4b34-8ffb-2acc0d9ef289"

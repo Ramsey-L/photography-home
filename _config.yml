@@ -1,0 +1,77 @@
+title: 我的摄影记录
+subtitle: Nikon Z fc 摄影日志
+description: 用照片保存走过的地方和当时的心情。
+keywords:
+  - 摄影
+  - Nikon Z fc
+  - 上海
+author: 李欣桐
+language: zh-CN
+timezone: Asia/Shanghai
+
+url: https://zncu-photo.pages.dev
+root: /
+permalink: album/:title/
+permalink_defaults:
+pretty_urls:
+  trailing_index: true
+  trailing_html: true
+
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
+skip_render:
+  - explore/**
+  - _routes.json
+
+new_post_name: :title.md
+default_layout: post
+titlecase: false
+external_link:
+  enable: true
+  field: site
+  exclude: ""
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+future: false
+syntax_highlighter: highlight.js
+marked:
+  lazyload: true
+
+highlight:
+  line_number: false
+  auto_detect: false
+  tab_replace: ""
+  wrap: true
+  hljs: false
+
+index_generator:
+  path: ""
+  per_page: 8
+  order_by: -date
+archive_generator:
+  per_page: 20
+  yearly: true
+  monthly: false
+category_generator:
+  per_page: 20
+tag_generator:
+  per_page: 20
+  enable_index_page: false
+
+meta_generator: false
+date_format: YYYY.MM.DD
+time_format: HH:mm
+updated_option: empty
+per_page: 10
+pagination_dir: page
+theme: next
+
+deploy:
+  type: ""

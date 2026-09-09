@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#17211e">
+  <meta name="description" content="在摄影地图中探索李欣桐的摄影日志。">
+  <title>摄影地图 | 我的摄影记录</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/explore/explore.css">
+</head>
+<body>
+  <header class="map-topbar">
+    <a class="map-home" href="/" aria-label="返回摄影日志"><span aria-hidden="true">←</span><span>摄影日志</span></a>
+    <div class="map-title"><strong>摄影地图</strong><span>PHOTO TRAIL</span></div>
+    <div class="map-tools">
+      <span class="film-count" aria-live="polite">胶卷 <strong id="film-count">0</strong>/6</span>
+      <label class="sound-switch"><span>声音</span><input id="sound-toggle" type="checkbox"><span class="switch-track" aria-hidden="true"><span></span></span></label>
+      <a class="map-github" href="https://github.com/Ramsey-L" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+  </header>
+  <main class="map-viewport" id="map-viewport">
+    <div class="photo-world" id="photo-world" aria-label="可探索的摄影地图">
+      <div class="map-road road-a" aria-hidden="true"></div>
+      <div class="map-road road-b" aria-hidden="true"></div>
+      <p class="zone-label zone-city">城市切片</p>
+      <p class="zone-label zone-nature">山海来信</p>
+      <p class="zone-label zone-memory">时间暗房</p>
+      <div id="landmarks"></div>
+      <div id="collectibles"></div>
+      <div class="player" id="player" aria-label="摄影向导">
+        <img src="/explore/character.svg" alt="" width="106" height="132">
+        <span class="player-shadow" aria-hidden="true"></span>
+      </div>
+    </div>
+  </main>
+  <aside class="nearby-panel" id="nearby-panel" aria-live="polite">
+    <span class="nearby-index" id="nearby-index">探索中</span>
+    <strong id="nearby-title">沿着地图走走</strong>
+    <span id="nearby-meta">相册会在靠近时回应你</span>
+    <a id="open-album" href="/" hidden>打开相册</a>
+  </aside>
+  <nav class="move-pad" aria-label="移动摄影向导">
+    <button type="button" data-move="up" aria-label="向上移动" title="向上">↑</button>
+    <button type="button" data-move="left" aria-label="向左移动" title="向左">←</button>
+    <button type="button" data-move="down" aria-label="向下移动" title="向下">↓</button>
+    <button type="button" data-move="right" aria-label="向右移动" title="向右">→</button>
+  </nav>
+  <script src="/explore/explore.js" defer></script>
+</body>
+</html>

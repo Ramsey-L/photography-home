@@ -1,0 +1,113 @@
+scheme: Muse
+darkmode: false
+
+favicon:
+  small: /favicon.svg
+  medium: /favicon.svg
+  apple_touch_icon: /favicon.svg
+  safari_pinned_tab: /favicon.svg
+
+menu:
+  home: / || fa fa-home
+  archives: /archives/ || fa fa-clock
+  探索: /explore/ || fa fa-compass
+  about: /about/ || fa fa-user
+
+menu_settings:
+  icons: true
+  badges: false
+
+avatar:
+  url: /images/avatar.jpg
+  rounded: false
+  rotated: false
+
+site_state: true
+social:
+  GitHub: https://github.com/Ramsey-L || fab fa-github
+  E-Mail: mailto:liam1093909131@gmail.com || fa fa-envelope
+
+footer:
+  since: 2025
+  icon:
+    name: fa fa-camera
+    animated: false
+    color: "#111111"
+  copyright: 李欣桐
+  powered: false
+
+excerpt_description: false
+read_more_btn: true
+
+post_meta:
+  item_text: true
+  created_at: true
+  updated_at:
+    enable: false
+  categories: true
+
+symbols_count_time:
+  separated_meta: false
+  item_text_total: false
+
+post_edit:
+  enable: false
+creative_commons:
+  license: by-nc-nd
+  sidebar: false
+  post: false
+  language:
+
+follow_me:
+  GitHub: https://github.com/Ramsey-L || fab fa-github
+  E-Mail: mailto:liam1093909131@gmail.com || fa fa-envelope
+
+sidebar:
+  position: left
+  display: post
+  padding: 18
+  offset: 12
+
+toc:
+  enable: false
+
+motion:
+  enable: true
+  async: true
+  transition:
+    post_block: fadeIn
+    post_header: fadeInDown
+    post_body: fadeInUp
+    coll_header: fadeInLeft
+    sidebar: fadeInUp
+
+fancybox: true
+mediumzoom: false
+pjax: false
+pace:
+  enable: false
+quicklink:
+  enable: true
+  home: true
+  archive: true
+
+back2top:
+  enable: true
+  sidebar: false
+  scrollpercent: true
+
+reading_progress:
+  enable: true
+  color: "#111111"
+  height: 2px
+
+bookmark:
+  enable: false
+
+custom_file_path:
+  style: source/_data/styles.styl
+  bodyEnd: source/_data/body-end.njk
+
+minify: true
+cache:
+  enable: true

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 164" role="img" aria-label="背着相机的摄影向导">
+  <g stroke="#151515" stroke-width="3" stroke-linejoin="round">
+    <path fill="#f0c8a5" d="M45 31c0-18 10-27 23-27s23 9 23 27v20c0 14-10 24-23 24S45 65 45 51z"/>
+    <path fill="#171918" d="M43 35c0-22 12-33 27-33 17 0 27 12 24 37-7-4-13-11-16-19-8 9-20 14-35 15z"/>
+    <path fill="#fff" d="M48 45c5-5 11-5 16 0-5 7-11 7-16 0zm26 0c5-5 11-5 16 0-5 7-11 7-16 0z"/>
+    <circle cx="57" cy="45" r="2.5" fill="#151515" stroke="none"/>
+    <circle cx="83" cy="45" r="2.5" fill="#151515" stroke="none"/>
+    <path d="M63 60c5 3 10 3 15 0" fill="none"/>
+    <path fill="#e34b36" d="M38 82c8-8 18-12 30-12s23 4 31 12l8 49H30z"/>
+    <path fill="#f2c84b" d="M55 73h26l-3 18H58z"/>
+    <path fill="#153e45" d="M36 128h30v33H24zm62 0H68v33h42z"/>
+    <path fill="#1d2422" d="M28 91l-17 34 14 7 22-29zm73 0 18 31-13 9-23-29z"/>
+    <path d="M47 81l42 42M89 81l-42 42" fill="none" stroke="#f7f3e8" stroke-width="4"/>
+    <rect x="45" y="94" width="47" height="31" rx="4" fill="#252a28"/>
+    <circle cx="69" cy="109" r="11" fill="#8bb7bf"/>
+    <circle cx="69" cy="109" r="5" fill="#17211e"/>
+    <rect x="53" y="89" width="16" height="8" fill="#252a28"/>
+  </g>
+</svg>

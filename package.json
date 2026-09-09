@@ -1,0 +1,27 @@
+{
+  "name": "zncu-photo-blog",
+  "version": "2.0.0",
+  "private": true,
+  "description": "A Hexo and NexT.Muse photography journal.",
+  "scripts": {
+    "clean": "hexo clean",
+    "build": "hexo clean && hexo generate --bail",
+    "server": "hexo server --debug",
+    "photos": "python tools/import_photos.py",
+    "check": "python tools/verify_public.py"
+  },
+  "hexo": {
+    "version": "8.1.2"
+  },
+  "dependencies": {
+    "hexo": "8.1.2",
+    "hexo-generator-archive": "2.0.0",
+    "hexo-generator-category": "2.0.0",
+    "hexo-generator-index": "4.0.0",
+    "hexo-generator-tag": "2.0.0",
+    "hexo-renderer-marked": "7.0.1",
+    "hexo-renderer-stylus": "3.0.1",
+    "hexo-server": "3.0.0",
+    "hexo-theme-next": "8.29.0"
+  }
+}
