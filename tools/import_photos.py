@@ -151,10 +151,8 @@ def save_variant(source: Path, target: Path, max_width: int, quality: int) -> tu
         return image.width, image.height
 
 
-def photo_html(photo: dict[str, object]) -> str:
-    orientation = "is-tall" if photo["height"] > photo["width"] else "is-wide"
-    title = html.escape(str(photo["title"]))
-    details = " · ".join(
+def photo_details(photo: dict[str, object]) -> str:
+    return " · ".join(
         value
         for value in (
             str(photo["aperture"]),
@@ -164,7 +162,18 @@ def photo_html(photo: dict[str, object]) -> str:
         )
         if value
     )
-    caption = html.escape(f"{title} · {details}" if details else title)
+
+
+def photo_caption(photo: dict[str, object]) -> str:
+    title = str(photo["title"])
+    details = photo_details(photo)
+    return f"{title} · {details}" if details else title
+
+
+def photo_html(photo: dict[str, object]) -> str:
+    orientation = "is-tall" if photo["height"] > photo["width"] else "is-wide"
+    title = html.escape(str(photo["title"]))
+    caption = html.escape(photo_caption(photo))
     return (
         f'<a class="photo-item {orientation}" href="{photo["src"]}" '
         f'data-fancybox="album" data-caption="{caption}">\n'
@@ -345,6 +354,12 @@ def main() -> None:
             "photos": len(album["photos"]),
             "route": f"/album/{album['id']}/",
             "cover": album["photos"][0]["thumb"],
+            "reveal": {
+                "image": (album["photos"][1] if len(album["photos"]) > 1 else album["photos"][0])["thumb"],
+                "caption": photo_caption(
+                    album["photos"][1] if len(album["photos"]) > 1 else album["photos"][0]
+                ),
+            },
         }
         for album in sorted(albums, key=lambda item: str(item["id"]), reverse=True)
     ]
