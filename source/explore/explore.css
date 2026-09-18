@@ -159,7 +159,7 @@ a {
   height: 12px;
   transform: translateX(0);
   transition: transform .2s ease;
-  width: 16px;
+  width: 12px;
 }
 
 .sound-switch input:checked + .switch-track {
