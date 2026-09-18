@@ -14,7 +14,7 @@
 - 联系邮箱：`liam1093909131@gmail.com`
 - GitHub：https://github.com/Ramsey-L
 - 访问统计：Cloudflare Pages Functions + D1（数据库 `zncu-photo-stats`，绑定名 `VISITS_DB`）
-- 趣味入口：`/explore/` 摄影地ߛ�
+- 趣味入口：`/explore/` 摄影地图
 
 ## 2. 当前内容
 
@@ -27,7 +27,7 @@
 - 第二页：`/page/2/`
 - 归档：`/archives/`
 - 关于我：`/about/`
-- 摄影地ߛ�：`/explore/`，包含 15 个相册地点、到访盖章、摄影向导、6 个可收集胶卷和时间暗房
+- 摄影地图：`/explore/`，包含 15 个相册地点、到访盖章、摄影向导、6 个可收集胶卷和时间暗房
 - 首页统计：累计匿名访客、累计浏览量、今日访问量和运行天数
 
 最新加入：
@@ -64,7 +64,7 @@ photography-home/
 │   │   ├── avatar.jpg
 │   │   └── albums/              # 公开大图与 thumbs 缩略图
 │   └── _data/
-│       ├── body-end.hjk         # 首页首屏、访问统计脚本与页尾信息
+│       ├── body-end.njk         # 首页首屏、访问统计脚本与页尾信息
 │       ├── photo-manifest.json  # 导入结果和排除记录
 │       └── styles.styl          # 摄影站定制样式
 ├── tools/
@@ -264,7 +264,7 @@ npm install
 升级 NexT 前必须：
 
 1. 备份项目；
-2. 阅读 NexT release notes［
+2. 阅读 NexT release notes；
 3. 更新锁定版本；
 4. 运行 `npm install`；
 5. 重新导入、构建、检查；
@@ -281,8 +281,8 @@ D:\Claude_gc\photography-home-backup-20260909
 如果必须回退：
 
 1. 不要删除备份；
-2. 先保存当前 Hexo 工程［
-3. 将备份恢复为 `D:\Claude_gc\photography-home`［
+2. 先保存当前 Hexo 工程；
+3. 将备份恢复为 `D:\Claude_gc\photography-home`；
 4. 按旧版维护手册中的 `prepare_deploy.py` 流程重新部署。
 
 ## 12. 故障排查
