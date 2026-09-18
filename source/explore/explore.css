@@ -94,14 +94,38 @@ a {
   justify-content: flex-end;
 }
 
-.film-count {
+.film-count,
+.landmark-count {
   color: #66635c;
   font-size: 11px;
+  white-space: nowrap;
 }
 
-.film-count strong {
+.film-count strong,
+.landmark-count strong {
   color: var(--ink);
   font: 700 16px Georgia, serif;
+}
+
+.darkroom-open {
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  color: var(--paper);
+  cursor: pointer;
+  font-size: 11px;
+  padding: 7px 9px;
+}
+
+.darkroom-open strong {
+  color: var(--yellow);
+  font: 700 13px Georgia, serif;
+}
+
+.darkroom-open:hover,
+.darkroom-open:focus-visible,
+.darkroom-open.has-new-film {
+  background: var(--red);
+  outline: none;
 }
 
 .sound-switch {
@@ -135,7 +159,7 @@ a {
   height: 12px;
   transform: translateX(0);
   transition: transform .2s ease;
-  width: 12px;
+  width: 16px;
 }
 
 .sound-switch input:checked + .switch-track {
@@ -287,9 +311,44 @@ a {
 .landmark img {
   background: #1d2422;
   display: block;
+  filter: grayscale(1) contrast(.86);
   height: 88px;
   object-fit: cover;
+  opacity: .68;
+  transition: filter .25s ease, opacity .25s ease;
   width: 100%;
+}
+
+.landmark.is-near img,
+.landmark.is-visited img {
+  filter: none;
+  opacity: 1;
+}
+
+.landmark-stamp {
+  align-items: center;
+  background: var(--red);
+  border: 2px solid var(--paper);
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  font-size: 9px;
+  font-weight: 700;
+  height: 38px;
+  justify-content: center;
+  opacity: 0;
+  position: absolute;
+  right: -13px;
+  rotate: 9deg;
+  top: -15px;
+  transform: scale(.65);
+  transition: opacity .2s ease, transform .2s ease;
+  width: 38px;
+}
+
+.landmark.is-visited .landmark-stamp {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .landmark-label {
@@ -486,6 +545,177 @@ a {
 .move-pad [data-move="down"] { grid-area: down; }
 .move-pad [data-move="right"] { grid-area: right; }
 
+.map-toast {
+  background: var(--ink);
+  border-left: 5px solid var(--yellow);
+  color: var(--paper);
+  font-size: 13px;
+  left: 50%;
+  max-width: calc(100% - 32px);
+  opacity: 0;
+  padding: 11px 15px;
+  pointer-events: none;
+  position: fixed;
+  top: calc(var(--topbar-height) + 18px);
+  transform: translate(-50%, -12px);
+  transition: opacity .2s ease, transform .2s ease;
+  z-index: 40;
+}
+
+.map-toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.darkroom-dialog {
+  background: #151918;
+  border: 2px solid var(--paper);
+  color: var(--paper);
+  max-height: calc(100vh - 48px);
+  max-width: 980px;
+  overflow: auto;
+  padding: 0;
+  width: calc(100% - 48px);
+}
+
+.darkroom-dialog::backdrop {
+  background: rgba(12, 15, 14, .82);
+  backdrop-filter: blur(4px);
+}
+
+.darkroom-head {
+  align-items: center;
+  border-bottom: 1px solid rgba(244, 241, 232, .3);
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 22px 17px;
+}
+
+.darkroom-head span {
+  color: var(--red);
+  display: block;
+  font: 11px Georgia, serif;
+  letter-spacing: .16em;
+}
+
+.darkroom-head h2 {
+  font-family: "STSong", "Songti SC", SimSun, serif;
+  font-size: 26px;
+  margin: 4px 0 0;
+}
+
+.darkroom-close {
+  background: transparent;
+  border: 1px solid rgba(244, 241, 232, .55);
+  color: var(--paper);
+  cursor: pointer;
+  font-size: 13px;
+  padding: 8px 11px;
+}
+
+.darkroom-close:hover,
+.darkroom-close:focus-visible {
+  background: var(--paper);
+  color: var(--ink);
+  outline: none;
+}
+
+.darkroom-summary {
+  color: #c8c5bb;
+  font-size: 14px;
+  margin: 0;
+  padding: 16px 22px 0;
+}
+
+.contact-sheet {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 20px 22px 24px;
+}
+
+.contact-frame {
+  background: #090b0a;
+  border: 1px solid #535853;
+  min-height: 245px;
+  padding: 11px;
+  position: relative;
+}
+
+.contact-frame::before,
+.contact-frame::after {
+  border-left: 4px dotted #777c76;
+  content: "";
+  inset-block: 7px;
+  position: absolute;
+  width: 1px;
+}
+
+.contact-frame::before {
+  left: 4px;
+}
+
+.contact-frame::after {
+  right: 7px;
+}
+
+.contact-frame img {
+  display: block;
+  height: 150px;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(.96);
+  transition: opacity .4s ease, transform .4s ease;
+  width: 100%;
+}
+
+.contact-frame.is-developed img {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.contact-copy {
+  padding: 10px 6px 0;
+}
+
+.contact-copy strong {
+  display: block;
+  font-family: "STSong", "Songti SC", SimSun, serif;
+  font-size: 16px;
+}
+
+.contact-copy span {
+  color: #a9ada8;
+  display: block;
+  font-size: 12px;
+  line-height: 1.55;
+  margin-top: 5px;
+}
+
+.undeveloped-frame {
+  align-items: center;
+  background: repeating-linear-gradient(135deg, #171b19 0, #171b19 10px, #111412 10px, #111412 20px);
+  color: #818680;
+  display: flex;
+  flex-direction: column;
+  height: 150px;
+  justify-content: center;
+}
+
+.undeveloped-frame strong {
+  color: var(--yellow);
+  font: 700 28px Georgia, serif;
+}
+
+.undeveloped-frame span {
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+.darkroom-complete {
+  color: var(--yellow);
+}
+
 @media (max-width: 720px) {
   :root {
     --topbar-height: 104px;
@@ -503,10 +733,24 @@ a {
 
   .map-tools {
     border-top: 1px solid #cbc7bc;
-    gap: 12px;
+    gap: 9px;
     grid-column: 1 / -1;
     justify-content: space-between;
     padding-top: 8px;
+  }
+
+  .landmark-count,
+  .film-count {
+    font-size: 10px;
+  }
+
+  .landmark-count strong,
+  .film-count strong {
+    font-size: 14px;
+  }
+
+  .darkroom-open {
+    padding: 6px 8px;
   }
 
   .map-github {
@@ -555,6 +799,32 @@ a {
   .move-pad button {
     height: 42px;
     width: 42px;
+  }
+
+  .darkroom-dialog {
+    max-height: calc(100vh - 24px);
+    width: calc(100% - 20px);
+  }
+
+  .darkroom-head {
+    padding: 16px 15px 13px;
+  }
+
+  .darkroom-head h2 {
+    font-size: 22px;
+  }
+
+  .darkroom-summary {
+    padding: 14px 15px 0;
+  }
+
+  .contact-sheet {
+    grid-template-columns: 1fr;
+    padding: 16px 15px 18px;
+  }
+
+  .contact-frame {
+    min-height: 0;
   }
 }
 
