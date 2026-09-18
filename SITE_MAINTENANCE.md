@@ -14,7 +14,7 @@
 - 联系邮箱：`liam1093909131@gmail.com`
 - GitHub：https://github.com/Ramsey-L
 - 访问统计：Cloudflare Pages Functions + D1（数据库 `zncu-photo-stats`，绑定名 `VISITS_DB`）
-- 趣味入口：`/explore/` 摄影地图
+- 趣味入口：`/explore/` 摄影地ߛ�
 
 ## 2. 当前内容
 
@@ -27,7 +27,7 @@
 - 第二页：`/page/2/`
 - 归档：`/archives/`
 - 关于我：`/about/`
-- 摄影地图：`/explore/`，包含 15 个相册地点、摄影向导和 6 个可收集胶卷
+- 摄影地ߛ�：`/explore/`，包含 15 个相册地点、到访盖章、摄影向导、6 个可收集胶卷和时间暗房
 - 首页统计：累计匿名访客、累计浏览量、今日访问量和运行天数
 
 最新加入：
@@ -64,7 +64,7 @@ photography-home/
 │   │   ├── avatar.jpg
 │   │   └── albums/              # 公开大图与 thumbs 缩略图
 │   └── _data/
-│       ├── body-end.njk         # 首页首屏、访问统计脚本与页尾信息
+│       ├── body-end.hjk         # 首页首屏、访问统计脚本与页尾信息
 │       ├── photo-manifest.json  # 导入结果和排除记录
 │       └── styles.styl          # 摄影站定制样式
 ├── tools/
@@ -203,7 +203,7 @@ npx --yes wrangler@4.130.0 pages deploy --branch main
 - 访问次数：每次完整页面加载计为一次浏览；
 - 今日访问：按上海时区统计当天浏览次数；
 - 不保存原始 IP、User-Agent、访问路径或个人资料；
-- 探索页的胶卷进度只保存在浏览器 `localStorage`。
+- 探索页的胶卷与地标到访进度只保存在浏览器 `localStorage`，键名分别为 `zncu-photo-films` 和 `zncu-photo-visited`。
 
 首次重建数据库时执行：
 
@@ -238,7 +238,8 @@ npx --yes wrangler@4.130.0 d1 execute zncu-photo-stats --remote --file migration
 - 手机端改为单列；
 - 首页顶部显示匿名访问统计，并提供醒目的 GitHub 入口；
 - 首页角色可随机打开相册，`/explore/` 提供键盘与触摸探索；
-- 探索页胶卷收集进度保存在浏览器本地，不上传；
+- 探索页会记录地标到访状态，未到访照片以灰度显示，到访后恢复彩色并盖章；
+- 胶卷收集进度保存在浏览器本地，每卷胶片在时间暗房显影一张照片，集齐后形成完整接触印样；
 - 页尾以小字号显示“关于我”、邮箱和 `Powered by Hexo & NexT.Muse`；
 - 支持 reduced-motion；
 - 不启用评论系统；
@@ -263,7 +264,7 @@ npm install
 升级 NexT 前必须：
 
 1. 备份项目；
-2. 阅读 NexT release notes；
+2. 阅读 NexT release notes［
 3. 更新锁定版本；
 4. 运行 `npm install`；
 5. 重新导入、构建、检查；
@@ -280,8 +281,8 @@ D:\Claude_gc\photography-home-backup-20260909
 如果必须回退：
 
 1. 不要删除备份；
-2. 先保存当前 Hexo 工程；
-3. 将备份恢复为 `D:\Claude_gc\photography-home`；
+2. 先保存当前 Hexo 工程［
+3. 将备份恢复为 `D:\Claude_gc\photography-home`［
 4. 按旧版维护手册中的 `prepare_deploy.py` 流程重新部署。
 
 ## 12. 故障排查
