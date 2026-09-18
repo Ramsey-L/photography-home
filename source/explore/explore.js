@@ -11,6 +11,15 @@
   var nearbyMeta = document.getElementById('nearby-meta');
   var openAlbum = document.getElementById('open-album');
   var filmCount = document.getElementById('film-count');
+  var landmarkCount = document.getElementById('landmark-count');
+  var landmarkTotal = document.getElementById('landmark-total');
+  var darkroomOpen = document.getElementById('darkroom-open');
+  var darkroomCount = document.getElementById('darkroom-count');
+  var darkroomDialog = document.getElementById('darkroom-dialog');
+  var darkroomClose = document.getElementById('darkroom-close');
+  var darkroomSummary = document.getElementById('darkroom-summary');
+  var contactSheet = document.getElementById('contact-sheet');
+  var mapToast = document.getElementById('map-toast');
   var soundToggle = document.getElementById('sound-toggle');
   var activeMoves = new Set();
   var albums = [];
@@ -20,8 +29,15 @@
   var lastFrame = performance.now();
   var playerPosition = { x: 240, y: 560 };
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var storageKey = 'zncu-photo-films';
-  var collected = new Set(JSON.parse(localStorage.getItem(storageKey) || '[]'));
+  var filmStorageKey = 'zncu-photo-films';
+  var visitedStorageKey = 'zncu-photo-visited';
+  var collected = readStoredSet(filmStorageKey);
+  var visited = readStoredSet(visitedStorageKey);
+  var toastTimer = null;
+
+  var revealAlbumIds = [
+    '20260905', '20260831', '20260703', '20260629', '20260531', '20250514'
+  ];
 
   var positions = [
     [.12, .22], [.27, .13], [.43, .24], [.60, .14], [.79, .22],
@@ -32,6 +48,15 @@
   var filmPositions = [
     [.18, .33], [.49, .14], [.83, .32], [.31, .59], [.62, .57], [.78, .84]
   ];
+
+  function readStoredSet(key) {
+    try {
+      var value = JSON.parse(localStorage.getItem(key) || '[]');
+      return new Set(Array.isArray(value) ? value : []);
+    } catch (_) {
+      return new Set();
+    }
+  }
 
   function worldSize() {
     return { width: world.offsetWidth, height: world.offsetHeight };
@@ -77,16 +102,22 @@
     landmarks = data.map(function (album, index) {
       var link = document.createElement('a');
       link.className = 'landmark';
+      link.classList.toggle('is-visited', visited.has(album.id));
       link.href = album.route;
       link.style.setProperty('--tilt', ((index % 5) - 2) * 1.6 + 'deg');
       link.setAttribute('aria-label', album.title + '，' + album.photos + ' 张照片');
       link.innerHTML =
         '<img src="' + album.cover + '" alt="" width="320" height="220" loading="lazy">' +
+        '<span class="landmark-stamp" aria-hidden="true">已访</span>' +
         '<span class="landmark-label"><strong>' + escapeHtml(album.title) + '</strong><span>' +
         escapeHtml(album.date.replaceAll('.', '/')) + '</span></span>';
+      link.addEventListener('click', function () {
+        markVisited(album.id);
+      });
       landmarksRoot.appendChild(link);
       return { album: album, element: link, x: 0, y: 0 };
     });
+    updateLandmarkCount();
   }
 
   function makeFilms() {
@@ -111,6 +142,87 @@
     return Math.hypot(a.x - b.x, a.y - b.y);
   }
 
+  function showToast(message) {
+    mapToast.textContent = message;
+    mapToast.classList.add('is-visible');
+    window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(function () {
+      mapToast.classList.remove('is-visible');
+    }, 2400);
+  }
+
+  function markVisited(albumId) {
+    if (visited.has(albumId)) return;
+    visited.add(albumId);
+    localStorage.setItem(visitedStorageKey, JSON.stringify(Array.from(visited)));
+    var landmark = landmarks.find(function (item) {
+      return item.album.id === albumId;
+    });
+    if (landmark) landmark.element.classList.add('is-visited');
+    updateLandmarkCount();
+  }
+
+  function updateLandmarkCount() {
+    var validVisits = albums.filter(function (album) {
+      return visited.has(album.id);
+    }).length;
+    landmarkCount.textContent = validVisits;
+    landmarkTotal.textContent = albums.length;
+  }
+
+  function revealAlbums() {
+    var selected = revealAlbumIds.map(function (id) {
+      return albums.find(function (album) { return album.id === id; });
+    }).filter(Boolean);
+    albums.forEach(function (album) {
+      if (selected.length < filmPositions.length && !selected.includes(album)) selected.push(album);
+    });
+    return selected.slice(0, filmPositions.length);
+  }
+
+  function renderDarkroom() {
+    if (!albums.length) return;
+    var selected = revealAlbums();
+    var developed = Math.min(collected.size, filmPositions.length);
+    darkroomCount.textContent = developed;
+    darkroomSummary.textContent = developed === filmPositions.length ?
+      '六卷胶片全部显影，这张接触印样记录了本次摄影旅程。' :
+      '已显影 ' + developed + ' / ' + filmPositions.length + '。继续探索地图，找到剩余胶卷。';
+    darkroomSummary.classList.toggle('darkroom-complete', developed === filmPositions.length);
+    contactSheet.innerHTML = selected.map(function (album, index) {
+      if (!collected.has(index)) {
+        return '<article class="contact-frame"><div class="undeveloped-frame"><strong>0' +
+          (index + 1) + '</strong><span>等待显影</span></div></article>';
+      }
+      var reveal = album.reveal || {
+        image: album.cover,
+        caption: album.date + ' · ' + album.photos + ' 张照片'
+      };
+      return '<article class="contact-frame is-developed">' +
+        '<img src="' + reveal.image + '" alt="' + escapeHtml(album.title) + '的显影照片" loading="lazy">' +
+        '<div class="contact-copy"><strong>' + escapeHtml(album.title) + '</strong><span>' +
+        escapeHtml(album.date + ' · ' + reveal.caption) + '</span></div></article>';
+    }).join('');
+  }
+
+  function openDarkroom() {
+    renderDarkroom();
+    darkroomOpen.classList.remove('has-new-film');
+    if (typeof darkroomDialog.showModal === 'function') {
+      if (!darkroomDialog.open) darkroomDialog.showModal();
+    } else {
+      darkroomDialog.setAttribute('open', '');
+    }
+  }
+
+  function closeDarkroom() {
+    if (typeof darkroomDialog.close === 'function') {
+      if (darkroomDialog.open) darkroomDialog.close();
+    } else {
+      darkroomDialog.removeAttribute('open');
+    }
+  }
+
   function updateNearby() {
     var candidate = null;
     var candidateDistance = Infinity;
@@ -126,7 +238,7 @@
     if (candidate && candidateDistance < 145) {
       if (nearest !== candidate) playTone(520, .05);
       nearest = candidate;
-      nearbyIndex.textContent = '发现相册';
+      nearbyIndex.textContent = visited.has(candidate.album.id) ? '已盖章地标' : '发现相册';
       nearbyTitle.textContent = candidate.album.title;
       nearbyMeta.textContent = candidate.album.date + ' · ' + candidate.album.photos + ' 张照片';
       openAlbum.href = candidate.album.route;
@@ -143,15 +255,20 @@
       if (!collected.has(film.id) && distance(playerPosition, film) < 54) {
         collected.add(film.id);
         film.element.classList.add('is-collected');
-        localStorage.setItem(storageKey, JSON.stringify(Array.from(collected)));
+        localStorage.setItem(filmStorageKey, JSON.stringify(Array.from(collected)));
         updateFilmCount();
+        darkroomOpen.classList.add('has-new-film');
+        showToast('找到一卷胶片，暗房里有新的照片。');
         playTone(780, .12);
       }
     });
   }
 
   function updateFilmCount() {
-    filmCount.textContent = Math.min(collected.size, filmPositions.length);
+    var developed = Math.min(collected.size, filmPositions.length);
+    filmCount.textContent = developed;
+    darkroomCount.textContent = developed;
+    renderDarkroom();
     if (collected.size >= filmPositions.length) {
       nearbyIndex.textContent = '暗房收藏完成';
     }
@@ -210,12 +327,14 @@
     };
 
     window.addEventListener('keydown', function (event) {
+      if (darkroomDialog.open) return;
       var move = keyMap[event.key];
       if (move) {
         event.preventDefault();
         activeMoves.add(move);
       }
       if ((event.key === 'Enter' || event.key === 'e' || event.key === 'E') && nearest) {
+        markVisited(nearest.album.id);
         window.location.href = nearest.album.route;
       }
     });
@@ -249,10 +368,18 @@
       });
     });
     window.addEventListener('resize', layoutObjects);
+    openAlbum.addEventListener('click', function () {
+      if (nearest) markVisited(nearest.album.id);
+    });
+    darkroomOpen.addEventListener('click', openDarkroom);
+    darkroomClose.addEventListener('click', closeDarkroom);
+    darkroomDialog.addEventListener('click', function (event) {
+      if (event.target === darkroomDialog) closeDarkroom();
+    });
   }
 
   function trackVisit() {
-    if (/^(localhost|127\.0\.0\.1)$/.test(window.location.hostname)) return;
+    if (/^(localhost|127\.0\.1\.1)$/.test(window.location.hostname)) return;
     var key = 'zncu-photo-visitor';
     var visitorId = localStorage.getItem(key);
     if (!visitorId) {
