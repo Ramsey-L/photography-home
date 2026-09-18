@@ -379,7 +379,7 @@
   }
 
   function trackVisit() {
-    if (/^(localhost|127\.0\.1\.1)$/.test(window.location.hostname)) return;
+    if (/^(localhost|127\.0\.0\.1)$/.test(window.location.hostname)) return;
     var key = 'zncu-photo-visitor';
     var visitorId = localStorage.getItem(key);
     if (!visitorId) {
