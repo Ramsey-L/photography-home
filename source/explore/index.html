@@ -14,7 +14,9 @@
     <a class="map-home" href="/" aria-label="返回摄影日志"><span aria-hidden="true">←</span><span>摄影日志</span></a>
     <div class="map-title"><strong>摄影地图</strong><span>PHOTO TRAIL</span></div>
     <div class="map-tools">
+      <span class="landmark-count" aria-live="polite">足迹 <strong id="landmark-count">0</strong>/<span id="landmark-total">0</span></span>
       <span class="film-count" aria-live="polite">胶卷 <strong id="film-count">0</strong>/6</span>
+      <button class="darkroom-open" id="darkroom-open" type="button">暗房 <strong id="darkroom-count">0</strong></button>
       <label class="sound-switch"><span>声音</span><input id="sound-toggle" type="checkbox"><span class="switch-track" aria-hidden="true"><span></span></span></label>
       <a class="map-github" href="https://github.com/Ramsey-L" target="_blank" rel="noopener noreferrer">GitHub</a>
     </div>
@@ -46,6 +48,18 @@
     <button type="button" data-move="down" aria-label="向下移动" title="向下">↓</button>
     <button type="button" data-move="right" aria-label="向右移动" title="向右">→</button>
   </nav>
+  <div class="map-toast" id="map-toast" role="status" aria-live="polite"></div>
+  <dialog class="darkroom-dialog" id="darkroom-dialog" aria-labelledby="darkroom-title">
+    <div class="darkroom-head">
+      <div>
+        <span>CONTACT SHEET</span>
+        <h2 id="darkroom-title">时间暗房</h2>
+      </div>
+      <button class="darkroom-close" id="darkroom-close" type="button" aria-label="关闭暗房">关闭</button>
+    </div>
+    <p class="darkroom-summary" id="darkroom-summary">找到地图中的胶卷，让照片逐张显影。</p>
+    <div class="contact-sheet" id="contact-sheet"></div>
+  </dialog>
   <script src="/explore/explore.js" defer></script>
 </body>
 </html>

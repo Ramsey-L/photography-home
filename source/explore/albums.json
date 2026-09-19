@@ -5,7 +5,11 @@
     "date": "2026.09.05",
     "photos": 17,
     "route": "/album/20260905/",
-    "cover": "/images/albums/20260905/thumbs/2e350735cb46.jpg"
+    "cover": "/images/albums/20260905/thumbs/2e350735cb46.jpg",
+    "reveal": {
+      "image": "/images/albums/20260905/thumbs/6ff799558c0e.jpg",
+      "caption": "2 · f/11 · 1/25s · ISO 100 · 90mm"
+    }
   },
   {
     "id": "20260904",
@@ -21,7 +25,11 @@
     "date": "2026.08.31",
     "photos": 8,
     "route": "/album/20260831/",
-    "cover": "/images/albums/20260831/thumbs/9f7c610b8a5e.jpg"
+    "cover": "/images/albums/20260831/thumbs/9f7c610b8a5e.jpg",
+    "reveal": {
+      "image": "/images/albums/20260831/thumbs/71bd17ec5ab7.jpg",
+      "caption": "景色 · f/11 · 1/250s · ISO 100 · 50mm"
+    }
   },
   {
     "id": "20260809",
@@ -53,7 +61,11 @@
     "date": "2026.07.02–07.04",
     "photos": 35,
     "route": "/album/20260703/",
-    "cover": "/images/albums/20260703/thumbs/f1dfe3fb6637.jpg"
+    "cover": "/images/albums/20260703/thumbs/f1dfe3fb6637.jpg",
+    "reveal": {
+      "image": "/images/albums/20260703/thumbs/c2d5dfad0660.jpg",
+      "caption": "南京鸭子 · f/5.3 · 1/100s · ISO 100 · 125mm"
+    }
   },
   {
     "id": "20260629",
@@ -61,7 +73,11 @@
     "date": "2026.06.29",
     "photos": 12,
     "route": "/album/20260629/",
-    "cover": "/images/albums/20260629/thumbs/c021e57dd4a3.jpg"
+    "cover": "/images/albums/20260629/thumbs/c021e57dd4a3.jpg",
+    "reveal": {
+      "image": "/images/albums/20260629/thumbs/9514261a8946.jpg",
+      "caption": "云雾之中 · f/13 · 1/125s · ISO 100 · 28mm"
+    }
   },
   {
     "id": "20260626",
@@ -85,7 +101,11 @@
     "date": "2026.05.31",
     "photos": 14,
     "route": "/album/20260531/",
-    "cover": "/images/albums/20260531/thumbs/3944f45e9877.jpg"
+    "cover": "/images/albums/20260531/thumbs/3944f45e9877.jpg",
+    "reveal": {
+      "image": "/images/albums/20260531/thumbs/e83fe52db908.jpg",
+      "caption": "琐碎单车 · f/13 · 1/100s · ISO 110 · 30mm"
+    }
   },
   {
     "id": "20260522",
@@ -117,6 +137,10 @@
     "date": "2025.05.14",
     "photos": 15,
     "route": "/album/20250514/",
-    "cover": "/images/albums/20250514/thumbs/4b585465773e.jpg"
+    "cover": "/images/albums/20250514/thumbs/4b585465773e.jpg",
+    "reveal": {
+      "image": "/images/albums/20250514/thumbs/1a07f4c680fe.jpg",
+      "caption": "路边之花2 · f/6.3 · 1/125s · ISO 1100 · 50mm"
+    }
   }
 ]

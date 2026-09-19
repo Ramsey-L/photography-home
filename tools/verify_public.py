@@ -51,8 +51,18 @@ def main() -> None:
         raise SystemExit("探索地图相册数量与照片清单不一致")
     if sum(album["photos"] for album in explore_data) != expected_images:
         raise SystemExit("探索地图照片数量与照片清单不一致")
+    reveal_count = sum(1 for album in explore_data if album.get("reveal"))
+    if reveal_count < 6:
+        raise SystemExit(f"暗房显影数据不足: expected>=6 actual={reveal_count}")
 
-    print(f"ok html={len(html_files)} albums={len(expected_routes)} photos={expected_images} explore=ready")
+    explore_html = (PUBLIC / "explore" / "index.html").read_text(encoding="utf-8")
+    if 'id="darkroom-dialog"' not in explore_html or 'id="landmark-count"' not in explore_html:
+        raise SystemExit("探索地图缺少暗房或地标进度界面")
+
+    print(
+        f"ok html={len(html_files)} albums={len(expected_routes)} "
+        f"photos={expected_images} reveals={reveal_count} explore=ready"
+    )
 
 
 if __name__ == "__main__":
